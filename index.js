@@ -9,13 +9,16 @@ dotenv.config();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.listen(5000, () => console.log('Server started...'));
+// process.env.PORT lets the port be set by Heroku
+var port = process.env.PORT || 8080;
+
+app.listen(port, () => console.log('Server started...'));
 
 app.get('/', (req, res) => {
     res.render('contact');
 });
 
-app.post('/send', async (req, res) => {
+app.post('/api/mail/send', async (req, res) => {
     let account = await nodemailer.createTestAccount();
     const user = process.env.GMAIL_USER;
     const pass = process.env.GMAIL_PASSWORD;
