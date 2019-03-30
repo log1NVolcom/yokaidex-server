@@ -9,13 +9,12 @@ dotenv.config();
 //Body parser midleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors(corsOptions));
-
 
 const corsOptions = {
     origin: process.env.ENDPOINT,
     optionsSuccessStatus: 200
 };
+app.use(cors(corsOptions));
 // process.env.PORT lets the port be set by Heroku
 var port = process.env.PORT || 8080;
 
