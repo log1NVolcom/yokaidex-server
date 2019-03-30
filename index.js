@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(cors(corsOptions));
 
 
-vconst corsOptions = {
+const corsOptions = {
     origin: process.env.ENDPOINT,
     optionsSuccessStatus: 200
 };
