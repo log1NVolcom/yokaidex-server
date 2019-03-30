@@ -45,7 +45,7 @@ app.post('/api/mail/send', async (req, res) => {
         to: "yokaidexofficial@gmail.com",
         subject: `${body.subject}`,
         text: "",
-        html: `${body.mensage}`
+        html: `${body.message}`
     };
 
     let info = await transporter.sendMail(mailOptions)
