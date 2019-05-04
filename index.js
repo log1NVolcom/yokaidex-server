@@ -29,7 +29,7 @@ var port = process.env.PORT || 8080;
 app.listen(port, () => console.log('Server started...'));
 app.options('*', cors());
 
-app.post('/api/mail/send', async (req, res) => {
+app.post('/api/mail/send', cors(), async (req, res) => {
     let account = await nodemailer.createTestAccount();
     const user = process.env.GMAIL_USER;
     const pass = process.env.GMAIL_PASSWORD;
