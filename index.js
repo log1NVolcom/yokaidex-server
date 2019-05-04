@@ -10,19 +10,23 @@ dotenv.config();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const corsOptions = {
-    origin: process.env.ENDPOINT,
-    optionsSuccessStatus: 200
-};
+var whitelist = [process.env.ENDPOINT, process.env.ENDPOINT2];
+
+var corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    }
+}
+
 app.use(cors(corsOptions));
 // process.env.PORT lets the port be set by Heroku
 var port = process.env.PORT || 8080;
 
 app.listen(port, () => console.log('Server started...'));
-
-app.get('/', (req, res) => {
-    res.render('contact');
-});
 
 app.post('/api/mail/send', async (req, res) => {
     let account = await nodemailer.createTestAccount();
@@ -49,5 +53,8 @@ app.post('/api/mail/send', async (req, res) => {
 
     let info = await transporter.sendMail(mailOptions)
 
-})
+
+    return res.status(200).send(info);
+
+});
 
